@@ -1,115 +1,90 @@
-"use client";
+const NewItem = () => {
+  // Initialize State Variables
+  const [name, setName] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [category, setCategory] = useState('produce');
 
-import { useState } from "react";
+  // Create a Form Submission Handler
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-export default function NewEvent() {
-  const [name, setName] = useState("");
-  const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
-  const [eventCreated, setEventCreated] = useState(false);
+    // Create an item object with current values
+    const item = { name, quantity, category };
+    console.log(item);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    // Display an alert with the current state
+    alert(`Item Name: ${name}, Quantity: ${quantity}, Category: ${category}`);
 
-    const newEvent = {
-      name,
-      date,
-      location,
-      description,
-    };
-    console.log(newEvent);
-
-    setEventCreated(true);
-
-    setName("");
-    setDate("");
-    setLocation("");
-    setDescription("");
-
-    setEventCreated(false);
-  };
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-  };
-
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
+    // Reset state variables to their initial values
+    setName('');
+    setQuantity(1);
+    setCategory('produce');
   };
 
   return (
-    <main>
-      <div className="min-h-screen bg-blue-gray-100 flex items-center justify-center">
-        {eventCreated && (
-          <div className="absolute top-0 mt-8 text-2xl text-yellow-400">
-            Event Created
-          </div>
-        )}
-        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-          <h1 className="text-2xl text-gray-800 font-bold mb-8">
-            Create New Event
-          </h1>
-          <form onSubmit={handleSubmit}>
-            <label className="block mb-4">
-              <span className="text-gray-800">Event Name:</span>
-              <input
-                required
-                onChange={handleNameChange}
-                value={name}
-                className="mt-1 p-1 block w-full rounded-md text-black bg-gray-100 focus:bg-white"
-              />
-            </label>
-
-            <label className="block mb-4">
-              <span className="text-gray-800">Event Date:</span>
-              <input
-                type="date"
-                required
-                onChange={handleDateChange}
-                value={date}
-                className="mt-1 p-1 block w-full rounded-md text-black bg-gray-100 focus:bg-white"
-              />
-            </label>
-
-            <label className="block mb-4 ">
-              <span className="text-gray-800">Event Location:</span>
-              <input
-                required
-                onChange={handleLocationChange}
-                value={location}
-                className="mt-1 p-1 block w-full rounded-md text-black bg-gray-100 focus:bg-white"
-              />
-            </label>
-
-            <label className="block mb-4">
-              <span className="text-gray-800">Event Description:</span>
-              <textarea
-                required
-                onChange={handleDescriptionChange}
-                value={description}
-                className="mt-1 p-1 block w-full rounded-md text-black bg-gray-100 focus:bg-white"
-                rows="3"
-              />
-            </label>
-
-            <button
-              type="submit"
-              className="w-full py-2 px-4 bg-sky-600 hover:bg-sky-500 rounded-md text-white"
-            >
-              Create Event
-            </button>
-          </form>
+    <div className="max-w-md mx-auto p-6 border rounded-lg shadow-lg">
+      <form onSubmit={handleSubmit}>
+        {/* Name Field */}
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-gray-700">Name</label>
+          <input
+            type="text"
+            id="name"
+            className="w-full border rounded py-2 px-3"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
         </div>
-      </div>
-    </main>
+
+        {/* Quantity Field */}
+        <div className="mb-4">
+          <label htmlFor="quantity" className="block text-gray-700">Quantity</label>
+          <input
+            type="number"
+            id="quantity"
+            className="w-full border rounded py-2 px-3"
+            value={quantity}
+            onChange={(e) => setQuantity(parseInt(e.target.value))}
+            min="1"
+            max="99"
+            required
+          />
+        </div>
+
+        {/* Category Field */}
+        <div className="mb-4">
+          <label htmlFor="category" className="block text-gray-700">Category</label>
+          <select
+            id="category"
+            className="w-full border rounded py-2 px-3"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="produce">Produce</option>
+            <option value="dairy">Dairy</option>
+            <option value="bakery">Bakery</option>
+            <option value="meat">Meat</option>
+            <option value="frozen">Frozen Foods</option>
+            <option value="canned">Canned Goods</option>
+            <option value="dry">Dry Goods</option>
+            <option value="beverages">Beverages</option>
+            <option value="snacks">Snacks</option>
+            <option value="household">Household</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="bg-blue-500 text-white rounded py-2 px-4 hover:bg-blue-600"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
-}
+};
+
+export default NewItem;
